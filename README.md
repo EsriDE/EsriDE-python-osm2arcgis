@@ -4,7 +4,7 @@ This Project contains different Python modules to convert node and way datasets 
 The current version publishes the data as point Feature Collection on ArcGIS Online. The modules can be extended with filters, schedulers or the possibility
 to save the datasets as Geodatabase.
 
-##Requirements
+## Requirements
 
 Following Python version and packages have to be installed:
 
@@ -15,6 +15,9 @@ Following Python version and packages have to be installed:
 * [OSM API](https://pypi.python.org/pypi/osmapi)
 
 ## Configuration Files
+
+### OSM Configuration
+
 The user can put his data in two configuration files. The first one is about the [Open Streetmap Data](osmconfig.json). Categories and attributes must have the same syntax as in OSM.
 
 | Parameter | Explanation | Example |
@@ -24,6 +27,7 @@ The user can put his data in two configuration files. The first one is about the
 | "boundingBox" | Bounding box for the data to be loaded | "boundingBox" : {"minLatInit" : 48.0937890648, "minLonInit" : 11.4947891235, "maxLatInit" : 48.172382181, "maxLonInit" : 11.6242218018} |
 | "geometryChosen" | Geometry of data to be loaded. 0:nodes, 1:ways, 2:both | "geometryChosen" : 0 |
 
+### ArcGIS Online Configuration
 
 The second file is used do configure the [ArcGIS Online access](agolconfig.json).
 
@@ -55,10 +59,10 @@ of the config file. The return value is a data frame that has the format that ca
 The module takes the dictionary from the [ReadAGOLConfig.py module](ReadAGOLConfig.py) and the data frame with the Open Street Map data. The data is published as a Feature Collection
 to the ArcGIS Online account that is defined in the configuration file.
 
-##Issues 
+## Issues 
 Find a bug or want to request a new feature? Please let us know by submitting an issue.
 
-##Licensing
+## Licensing
 
 Copyright 2017 Esri Deutschland GmbH
 
