@@ -1,0 +1,20 @@
+{
+	"categories" : {
+		"public_transport" : ["station"]
+	},
+	
+	"attributes" : {
+		"Name" : "name", 
+		"Rollstuhlgerecht":"wheelchair", 
+		"Rollstuhlgerechte_Toilette":"toilets:wheelchair"
+	},
+	
+	"boundingBox" : {
+		"minLatInit" : "48.0772695254",
+		"minLonInit" : "11.4776988924",
+		"maxLatInit" : "48.1868111442",
+		"maxLonInit" : "11.671867758"
+	},
+	
+	"geometryChosen" : 0
+}
