@@ -132,7 +132,7 @@ def readAGOLConfig():
                     try:
                         overwriteService = data["overwriteFeatureService"]
                         if overwriteService == 1:
-                            1=1
+                            print("Overwriting Feature Service is okay.")
                         else:
                             print("You do not allow to overwrite the Feature Service.")
                             sys.exit()
