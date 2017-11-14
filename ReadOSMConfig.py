@@ -9,7 +9,6 @@ __email__ = "s.geigenberger@esri.de"
 import json
 import sys
 import requests
-from ctypes.wintypes import DOUBLE
 
 def readOSMConfig():
     dictOSMConfig = {}
