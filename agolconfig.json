@@ -1,13 +1,13 @@
 {
-	"portalInit" : "http://www.arcgis.com/home/index.html",
-	"userInit" : "user",
-	"passwordInit" : "password",
-	"title" : "title",
+	"portalInit" : "https://www.arcgis.com/",
+	"userInit" : "sige4stadtportal",
+	"passwordInit" : "gei29gi11",
+	"title" : "title_test",
 	"tags" : ["tag1, tag2, tag3"],
 	"description" : "description.",
-	"copyrightText" : "Copyright",
-	"maxRecordCount" : 5000,
-	"updateService" : 1,
-	"featureServiceID" : "4cfcbee9f1de4ed9a167e0c7b8d11825",
-	"overwriteFeatureService" : 1
+	"copyrightText" : "",
+	"maxRecordCount" : 1000,
+	"updateService" : 0,
+	"featureServiceID" : "",
+	"silentUpdate" : 0
 }

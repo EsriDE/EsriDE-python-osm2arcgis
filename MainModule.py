@@ -26,5 +26,3 @@ print("OpenStreetMap data loaded.")
 #The data of the data frame with the OSM data is loaded as a Feature Collection to the ArcGIS Online or Portal account. 
 dta = DataToAGO.run(dictAGOLConfig, god)
 print("Upload to ArcGIS Online / Portal finished.")
-
-#Geigenberger01 - Passwort Portal, https://vsdev1817.esri-de.com/arcgis/home/
