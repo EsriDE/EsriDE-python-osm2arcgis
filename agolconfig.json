@@ -1,13 +1,13 @@
 {
-	"portalInit" : "https://www.arcgis.com/",
+	"portalInit" : "http://www.arcgis.com/home/index.html",
 	"userInit" : "user",
 	"passwordInit" : "password",
-	"title" : "title_test",
+	"title" : "title",
 	"tags" : ["tag1, tag2, tag3"],
 	"description" : "description.",
-	"copyrightText" : "",
-	"maxRecordCount" : 1000,
-	"updateService" : 0,
-	"featureServiceID" : "",
-	"silentUpdate" : 0
+	"copyrightText" : "Copyright",
+	"maxRecordCount" : 5000,
+	"updateService" : 1,
+	"featureServiceID" : "4cfcbee9f1de4ed9a167e0c7b8d11825",
+	"overwriteFeatureService" : 1
 }

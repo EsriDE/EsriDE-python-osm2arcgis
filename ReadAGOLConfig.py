@@ -8,7 +8,6 @@ __email__ = "s.geigenberger@esri.de"
 
 import json
 import sys
-from click._compat import raw_input
 
 def readAGOLConfig():
     dictAGOLConfig = {}
@@ -131,18 +130,14 @@ def readAGOLConfig():
                 try:
                     gis.content.get(featureServiceID)
                     try:
-                        silentUpdate = data["silentUpdate"]
-                        if silentUpdate == 1:
+                        overwriteService = data["overwriteFeatureService"]
+                        if overwriteService == 1:
                             print("Overwriting Feature Service is okay.")
                         else:
-                            silentUpdateInput = raw_input("Enter 'y' if the Feature Service should be updated.")
-                            if silentUpdateInput == "y":
-                                print("Overwriting Feature Service is okay.")
-                            else:
-                                print("You do not allow to overwrite the Feature Service.")
-                                sys.exit()
+                            print("You do not allow to overwrite the Feature Service.")
+                            sys.exit()
                     except:
-                        print("There is no input if the Feature Service should be overwritten silently or not.")
+                        print("There is no input if the Feature Service should be overwritten or not.")
                 except:
                     print("Feature Service does not exist.")
                     sys.exit()

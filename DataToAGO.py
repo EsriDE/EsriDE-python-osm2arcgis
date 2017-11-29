@@ -10,17 +10,15 @@ At first the connection to the ArcGIS Online or Portal is built by using the URL
 publish the Feature Collection.
 '''
 
-from _overlapped import NULL
 from copy import deepcopy
-import datetime
 import json
 import sys
 
 from arcgis import geometry
 from arcgis.gis import GIS
-import requests
 
 import pandas as pd
+from _overlapped import NULL
 
 
 def run(dictAGOLConfig, data):
@@ -50,6 +48,7 @@ def run(dictAGOLConfig, data):
         updateService(gis, data, featureServiceID)
     else:
         uploadData(gis, data, title, tags, description, copyrightText, maxRecordCount)
+    # updateService(gis, data)
     
 
 def uploadData(gis, data, title, tags, description, copyrightText, maxRecordCount):
@@ -80,7 +79,6 @@ def uploadData(gis, data, title, tags, description, copyrightText, maxRecordCoun
 
     item = gis.content.add(item_properties_input)
     new_item = item.publish()
-    print("Service with " + str(len(dataForFrame)) + " features published.")
     item.delete()
     
     layer = new_item.layers[0]
@@ -110,8 +108,6 @@ def getDictUpdate(gis, data, template_feature, layer):
         
     del template_feature.attributes["FID"]
     
-    counterData = 1
-    listFeaturesAdd = []
     for feature in data:
         new_feature = deepcopy(template_feature)
         
@@ -126,53 +122,4 @@ def getDictUpdate(gis, data, template_feature, layer):
             new_feature.attributes[key] = feature[key]
         
         layer.edit_features(adds = [new_feature])
-        listFeaturesAdd.append(new_feature)
-        print(str(counterData) + " of " + str(len(data)) + " features added.")
-        counterData = counterData + 1
     
-def addBigIntField(layerURL, intFieldName, portal, user, password):
-
-    newField = {
-                "name" : intFieldName, 
-                "type" : "esriFieldTypeInteger",   
-                "alias" : intFieldName, 
-                "sqlType" : "sqlTypeBigInt", 
-                "nullable" : True, 
-                "editable" : True,
-                "visible" : True
-                }
-    
-    token_URL = "{}/sharing/generateToken".format(portal)
-    #token_params = {'username':user,'password': password,'referer': portal,'f':'json','expiration':60}
-    token_params = {'username' : user,
-                    'password' : password,
-                    'client' : 'referer',
-                    'referer': portal,
-                    'expiration': 60,
-                    'f' : 'json'}
-        
-    print("requesting token with username: {}".format(user))
-    r = requests.post(token_URL,token_params)
-    
-    print(r.text)
-        
-    token_obj = r.json()
-        
-    token = token_obj['token']
-    expires = token_obj['expires']
-        
-    tokenExpires = datetime.datetime.fromtimestamp(int(expires)/1000)
-        
-    print("token for user {}, valid till: {}".format(user, tokenExpires))
-        
-    featureLayerAdminUrl = layerURL.replace("/rest/", "/rest/admin/")
-        
-    params = {"f":"json", "token":token}
-    params["addToDefinition"] = json.dumps({"fields":[newField]})
-        
-    print("Adding field.")
-    layerUpdateUrl = "{}/addToDefinition".format(featureLayerAdminUrl)
-    layerResult = requests.post(layerUpdateUrl, params)
-    print(layerResult.text)
-        
-    print("Addding field complete.")

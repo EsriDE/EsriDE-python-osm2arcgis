@@ -1,24 +1,4 @@
 {
-	"categories_" : {
-		"amenity" : ["bar", "restaurant"]
-	},
-	
-	"attributes_" : {
-		"Name" : "name", 
-		"Rollstuhlgerecht":"wheelchair", 
-		"Rollstuhlgerechte_Toilette":"toilets:wheelchair"
-	},
-	
-	"boundingBox_" : {
-		"minLatInit" : "47.2195681123",
-		"minLonInit" : "5.3344695568",
-		"maxLatInit" : "55.2063491964",
-		"maxLonInit" : "15.29296875"
-	},
-	
-	"geometryChosen_" : 0,
-	"bound____" : "<bounding><westbc>5.3344695568</westbc><eastbc>15.29296875</eastbc><northbc>55.2063491964</northbc><southbc>47.2195681123</southbc></bounding>",
-	
 	"categories" : {
 		"public_transport" : ["station"]
 	},

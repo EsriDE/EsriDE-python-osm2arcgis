@@ -21,7 +21,7 @@ from copy import deepcopy
 oApi = OsmApi()
 
 api = overpass.API()
-api = overpass.API(timeout=86400)
+api = overpass.API(timeout=36000)
 
 dictData = []
 title = ""
@@ -92,18 +92,9 @@ def getPoints(categories, attributes, minLat, minLon, maxLat, maxLon, agolConfig
                 dictElement["id"] = id
                 dictElement["lon"] = element["lon"]
                 dictElement["lat"] = element["lat"]
-                try:
-                    node = oApi.NodeGet(element["id"])
-                    if "user" in node.keys():
-                        dictElement["user_"] = node["user"]
-                    else:
-                        dictElement["user_"] = ""
-                    if "timestamp" in node.keys():
-                        dictElement["timestamp"] = node["timestamp"]
-                    else:
-                        dictElement["timestamp"] = ""
-                except:
-                    print("Node for this element not available")
+                node = oApi.NodeGet(element["id"])
+                dictElement["user_"] = node["user"]
+                dictElement["timestamp"] = node["timestamp"]
                 dictElement["attribute"] = key_cat + "-" + val_cat
                 dictData.append(dictElement)
 
@@ -133,27 +124,14 @@ def getWays(categories, attributes, minLat, minLon, maxLat, maxLon, agolConfig):
                     val_att = attributes[key_att]
                     if val_att in tags:
                         dictElement[key_att] = tags[val_att]
-                id = element["id"]
-                id = float(id)
-                dictElement["id"] = id
-                
+                dictElement["id"] = element["id"]
                 nodes = element["nodes"]
-                
-                try:
-                    node = oApi.NodeGet(nodes[0])
-                    if "user" in node.keys():
-                        dictElement["user_"] = node["user"]
-                    else:
-                        dictElement["user_"] = ""
-                    if "timestamp" in node.keys():
-                        dictElement["timestamp"] = node["timestamp"]
-                    else:
-                        dictElement["timestamp"] = ""
-                        
-                    dictElement["lon"] = node["lon"]
-                    dictElement["lat"] = node["lat"]
-                except:
-                    print("Node for this element not available")
-
-                dictElement["attribute"] = key_cat + "-" + val_cat
+                # for node in nodes:
+                #    wayNode = oApi.NodeGet(node)
+                node = oApi.NodeGet(nodes[0])
+                dictElement["lon"] = node["lon"]
+                dictElement["lat"] = node["lat"]
+                dictElement["user"] = node["user"]
+                dictElement["timestamp"] = node["timestamp"]
+                dictElement[key_cat] = val_cat
                 dictData.append(dictElement)
