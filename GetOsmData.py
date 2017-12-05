@@ -2,7 +2,7 @@
 __author__ = "Simon Geigenberger"
 __copyright__ = "Copyright 2017, Esri Deutschland GmbH"
 __license__ = "Apache-2.0"
-__version__ = "1.0"
+__version__ = "1.1"
 __email__ = "s.geigenberger@esri.de"
 
 This python module is used to generate a data frame out of OpenStreetMap data. Point and way information can be loaded as point data. For this the user can define
@@ -57,7 +57,6 @@ def run(osmConfig, agolConfig):
         getWays(categories, attributes, minLat, minLon, maxLat, maxLon, agolConfig)
     
     df = pd.DataFrame.from_dict(dictData)
-    #df.to_csv("nodes_canada.csv")
     return dictData
     
         
@@ -88,22 +87,21 @@ def getPoints(categories, attributes, minLat, minLon, maxLat, maxLon, agolConfig
                     if val_att in tags:
                         dictElement[key_att] = tags[val_att]
                 id = element["id"]
-                id = float(id)
+                #id = float(id)
                 dictElement["id"] = id
                 dictElement["lon"] = element["lon"]
                 dictElement["lat"] = element["lat"]
-                try:
-                    node = oApi.NodeGet(element["id"])
-                    if "user" in node.keys():
-                        dictElement["user_"] = node["user"]
-                    else:
-                        dictElement["user_"] = ""
-                    if "timestamp" in node.keys():
-                        dictElement["timestamp"] = node["timestamp"]
-                    else:
-                        dictElement["timestamp"] = ""
-                except:
-                    print("Node for this element not available")
+                if "user" in attributes or "timestamp" in attributes:
+                    try:
+                        node = oApi.NodeGet(element["id"])
+                        if "user" in attributes:
+                            if "user" in node.keys():
+                                dictElement["user_"] = node["user"]
+                        if "timestamp" in attributes:
+                            if "timestamp" in node.keys():
+                                dictElement["timestamp"] = node["timestamp"]
+                    except:
+                        print("Node for this element not available")
                 dictElement["attribute"] = key_cat + "-" + val_cat
                 dictData.append(dictElement)
 
@@ -134,7 +132,6 @@ def getWays(categories, attributes, minLat, minLon, maxLat, maxLon, agolConfig):
                     if val_att in tags:
                         dictElement[key_att] = tags[val_att]
                 id = element["id"]
-                id = float(id)
                 dictElement["id"] = id
                 
                 nodes = element["nodes"]

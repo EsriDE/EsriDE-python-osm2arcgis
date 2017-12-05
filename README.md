@@ -11,6 +11,7 @@ Following Python version and packages have to be installed. It is described how 
 Download and install the 3.x Version of [Anaconda](https://www.anaconda.com/download/). Then open the Anaconda Navigator and create a new Python Environment. The Python version must be 3.5 or later. Then install these packages in the environment:
 
 * [pandas 0.20.2](http://pandas.pydata.org/): Can be found in the package list in Anaconda and installed directly.
+* [click](https://github.com/pallets/click): Can be found in the package list in Anaconda and installed directly.
 The other packages are installed by using the terminal and entering a line of code.
 * [ArcGIS API for Python](https://developers.arcgis.com/python/): `conda install -c esri arcgis`
 * [Overpass API Python Wrapper](https://github.com/mvexel/overpass-api-python-wrapper): `pip install overpass`

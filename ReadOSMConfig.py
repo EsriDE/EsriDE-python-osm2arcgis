@@ -2,7 +2,7 @@
 __author__ = "Simon Geigenberger"
 __copyright__ = "Copyright 2017, Esri Deutschland GmbH"
 __license__ = "Apache-2.0"
-__version__ = "1.0"
+__version__ = "1.1"
 __email__ = "s.geigenberger@esri.de"
 '''
 
@@ -147,10 +147,10 @@ def readOSMConfig():
     #Validates if the coordinates have a correct value and the maximum values are greater than the minimum values.  
     if maxLat>minLat:
         if maxLon>minLon:
-            if maxLat < 90 or maxLat > -90:
-                if minLat < 90 or minLat > -90:
-                    if maxLon < 180 or maxLon > -180:
-                        if minLon < 180 or minLon > -180:
+            if maxLat < 90 and maxLat > -90:
+                if minLat < 90 and minLat > -90:
+                    if maxLon < 180 and maxLon > -180:
+                        if minLon < 180 and minLon > -180:
                             print("All Coordinates in range.")
                         else:
                             print("Minimum longitude is out of range.")

@@ -1,1 +1,1 @@
-start C:\Users\sige\AppData\Local\Continuum\Anaconda3\envs\arcgis\python.exe C:\Users\sige\ESRI_Deutschland_GmbH\Sozialhelden_Wheelmap\Python_Skript\OSM_to_AGO\MainModule.py
+start "path to python environment"\python.exe "path to python scripts"\MainModule.py
