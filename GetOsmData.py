@@ -2,7 +2,7 @@
 __author__ = "Simon Geigenberger"
 __copyright__ = "Copyright 2017, Esri Deutschland GmbH"
 __license__ = "Apache-2.0"
-__version__ = "1.1"
+__version__ = "1.2"
 __email__ = "s.geigenberger@esri.de"
 
 This python module is used to generate a data frame out of OpenStreetMap data. Point and way information can be loaded as point data. For this the user can define
@@ -56,8 +56,8 @@ def run(osmConfig, agolConfig):
         getPoints(categories, attributes, minLat, minLon, maxLat, maxLon, agolConfig)
         getWays(categories, attributes, minLat, minLon, maxLat, maxLon, agolConfig)
     
-    df = pd.DataFrame.from_dict(dictData)
-    return dictData
+    dataframe_total = pd.DataFrame.from_dict(dictData)
+    return dataframe_total
     
         
 def getPoints(categories, attributes, minLat, minLon, maxLat, maxLon, agolConfig):

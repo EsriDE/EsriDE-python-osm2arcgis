@@ -2,7 +2,7 @@
 __author__ = "Simon Geigenberger"
 __copyright__ = "Copyright 2017, Esri Deutschland GmbH"
 __license__ = "Apache-2.0"
-__version__ = "1.1"
+__version__ = "1.2"
 __email__ = "s.geigenberger@esri.de"
 
 This python module is used to load the data of a data frame an ArcGIS Online or Portal. The ArcGIS Python API is used to achieve this goal. 
@@ -25,7 +25,7 @@ import requests
 import pandas as pd
 
 
-def run(dictAGOLConfig, data):
+def run(dictAGOLConfig, dataframe_total):
     """
     Function to build the connection to the user of the ArcGIS Online or Portal.
     @param portal: URL of the portal where the data is uploaded
@@ -39,7 +39,7 @@ def run(dictAGOLConfig, data):
     portal = dictAGOLConfig["portal"]
     user = dictAGOLConfig["user"]
     password = dictAGOLConfig["password"]
-    data = data
+    dataframe_total = dataframe_total
     title = dictAGOLConfig["title"]
     tags = dictAGOLConfig["tags"]
     description = dictAGOLConfig["description"]
@@ -49,12 +49,12 @@ def run(dictAGOLConfig, data):
     updateServiceParam = dictAGOLConfig["updateService"]
     if updateServiceParam == 1:
         featureServiceID = dictAGOLConfig["featureServiceID"]
-        updateService(gis, data, featureServiceID, copyrightText, description, maxRecordCount, title)
+        updateService(gis, dataframe_total, featureServiceID, copyrightText, description, maxRecordCount, title)
     else:
-        uploadData(gis, data, title, tags, description, copyrightText, maxRecordCount, portal, user, password)
+        uploadData(gis, dataframe_total, title, tags, description, copyrightText, maxRecordCount, portal, user, password)
     
 
-def uploadData(gis, data, title, tags, description, copyrightText, maxRecordCount, portal, user, password):
+def uploadData(gis, dataframe_total, title, tags, description, copyrightText, maxRecordCount, portal, user, password):
     """
     Function to publish the OSM data on the ArcGIS Online or Portal.
     @param gis: connection to the user in the ArcGIS Online or Portal
@@ -67,19 +67,17 @@ def uploadData(gis, data, title, tags, description, copyrightText, maxRecordCoun
     if not element_exists:
         time_now = str(datetime.datetime.now())
         title = title + "_" + time_now
-        
-    data_frame = pd.DataFrame.from_dict(data)
     
-    title_row = data_frame[:0]
+    dataframe_total_title = dataframe_total[:0]
     
-    data_row = data_frame[0:]
+    dataframe_total_data = dataframe_total[0:]
     
-    listBigInt = list(data_row.select_dtypes(include=["int64"]).columns)
+    listBigInt = list(dataframe_total_data.select_dtypes(include=["int64"]).columns)
     #print(listBigInt)
     for field in listBigInt:
-        del title_row[field]
+        del dataframe_total_title[field]
         
-    fc = gis.content.import_data(title_row)
+    fc = gis.content.import_data(dataframe_total_title)
     
     item_properties_input = {
     "title": title,
@@ -105,7 +103,7 @@ def uploadData(gis, data, title, tags, description, copyrightText, maxRecordCoun
     for field in listBigInt:
         addBigIntField(layerURL, field, portal, user, password)
     
-    groups = splitDataFrameIntoSmaller(data_row)
+    groups = splitdataframe_totalIntoSmaller(dataframe_total_data)
     i=1;
     for sub_df in groups:
         fc_dataAdd = gis.content.import_data(sub_df)
@@ -113,14 +111,13 @@ def uploadData(gis, data, title, tags, description, copyrightText, maxRecordCoun
         print(str(i)+"000 Features of about "+str((len(groups)))+"000 Features added.")
         i = i+1
     
-def updateService(gis, data, featureID, copyrightText, description, maxRecordCount, title):
+def updateService(gis, dataframe_total, featureID, copyrightText, description, maxRecordCount, title):
     existing_service = gis.content.get(featureID)
     service_layer = existing_service.layers[0]
     fset = service_layer.query()
     #service_layer.edit_features(deletes = fset)
-    data_frame = pd.DataFrame.from_dict(data)
-    data_row = data_frame[0:]
-    groups = splitDataFrameIntoSmaller(data_row)
+    dataframe_total_data = dataframe_total[0:]
+    groups = splitdataframe_totalIntoSmaller(dataframe_total_data)
     updateFeatureDescription(copyrightText, maxRecordCount, title, description, service_layer)
     i=1;
     for sub_df in groups:
@@ -199,7 +196,7 @@ def addBigIntField(layerURL, intFieldName, portal, user, password):
         
     print("Addding field complete.")
     
-def splitDataFrameIntoSmaller(df): 
+def splitdataframe_totalIntoSmaller(df): 
     listOfDf = list()
     numberChunks = len(df) // 1000 + 1
     for i in range(numberChunks):

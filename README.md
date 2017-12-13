@@ -26,7 +26,7 @@ The user can put his data in two configuration files. The first one is about the
 | Parameter | Explanation | Example |
 | --- | --- | ---|
 | "categories" | Target categories for data that should be exported | "categories" : {"public_transport" : ["station"],"amenity" : ["place_of_worship", "bar"]} |
-| "attributes" | Attributes to be stored. Field name from OSM and field name for Feature Layer. No space allowed! Latitude, longitude, user, timestamp and id are always included. | "attributes" : {"Name" : "name", "Rollstuhlgerecht":"wheelchair", "Rollstuhlgerechte_Toilette":"toilets:wheelchair"} |
+| "attributes" | Attributes to be stored. Field name from OSM and field name for Feature Layer. No space allowed! Latitude, longitude and id are always included. | "attributes" : {"Name" : "name", "Rollstuhlgerecht":"wheelchair", "Rollstuhlgerechte_Toilette":"toilets:wheelchair"} |
 | "boundingBox" | Bounding box for the data to be loaded | "boundingBox" : {"minLatInit" : 48.0937890648, "minLonInit" : 11.4947891235, "maxLatInit" : 48.172382181, "maxLonInit" : 11.6242218018} |
 | "geometryChosen" | Geometry of data to be loaded. 0:nodes, 1:ways, 2:both | "geometryChosen" : 0 |
 
