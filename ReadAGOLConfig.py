@@ -1,8 +1,8 @@
 '''
 __author__ = "Simon Geigenberger"
-__copyright__ = "Copyright 2017, Esri Deutschland GmbH"
+__copyright__ = "Copyright 2018, Esri Deutschland GmbH"
 __license__ = "Apache-2.0"
-__version__ = "1.2"
+__version__ = "1.3"
 __email__ = "s.geigenberger@esri.de"
 '''
 
@@ -120,38 +120,38 @@ def readAGOLConfig():
         print("No maxRecordCount chosen.")
         sys.exit()
         
-    #Checks if the update input is done
-    try:
-        updateService = data["updateService"]
-        dictAGOLConfig["updateService"] = updateService
-        if updateService == 1:
-            try:
-                featureServiceID = data["featureServiceID"]
-                dictAGOLConfig["featureServiceID"] = featureServiceID
-                try:
-                    gis.content.get(featureServiceID)
-                    try:
-                        silentUpdate = data["silentUpdate"]
-                        if silentUpdate == 1:
-                            print("Overwriting Feature Service is okay.")
-                        else:
-                            silentUpdateInput = raw_input("Enter 'y' if the Feature Service should be updated.")
-                            if silentUpdateInput == "y":
-                                print("Overwriting Feature Service is okay.")
-                            else:
-                                print("You do not allow to overwrite the Feature Service.")
-                                sys.exit()
-                    except:
-                        print("There is no input if the Feature Service should be overwritten silently or not.")
-                except:
-                    print("Feature Service does not exist.")
-                    sys.exit()
-            except:
-                print("No featureServiceID chosen.")
-                sys.exit()
-                
-    except:
-        print("No maxRecordCount chosen.")
-        sys.exit()
-    
+    #Checks if the overwrite input is done
+#     try:
+#         overwriteService = data["overwriteService"]
+#         dictAGOLConfig["overwriteService"] = overwriteService
+#         if overwriteService == 1:
+#             try:
+#                 featureServiceID = data["featureServiceID"]
+#                 dictAGOLConfig["featureServiceID"] = featureServiceID
+#                 try:
+#                     gis.content.get(featureServiceID)
+#                     try:
+#                         silentOverwrite = data["silentOverwrite"]
+#                         if silentOverwrite == 1:
+#                             print("Overwriting Feature Service is okay.")
+#                         else:
+#                             silentOverwriteInput = raw_input("Enter 'y' if the Feature Service should be overwritten.")
+#                             if silentOverwriteInput == "y":
+#                                 print("Overwriting Feature Service is okay.")
+#                             else:
+#                                 print("You do not allow to overwrite the Feature Service.")
+#                                 sys.exit()
+#                     except:
+#                         print("There is no input if the Feature Service should be overwritten silently or not.")
+#                 except:
+#                     print("Feature Service does not exist.")
+#                     sys.exit()
+#             except:
+#                 print("No featureServiceID chosen.")
+#                 sys.exit()
+#                 
+#     except:
+#         print("No overwriting chosen.")
+#         sys.exit()
+    dictAGOLConfig["overwriteService"] = 0
     return dictAGOLConfig

@@ -16,6 +16,8 @@ The other packages are installed by using the terminal and entering a line of co
 * [ArcGIS API for Python](https://developers.arcgis.com/python/): `conda install -c esri arcgis`
 * [Overpass API Python Wrapper](https://github.com/mvexel/overpass-api-python-wrapper): `pip install overpass`
 * [OSM API](https://pypi.python.org/pypi/osmapi): `pip install osmapi`
+*[pyshp](https://pypi.python.org/pypi/pyshp): `conda install pyshp` and you have to change "path" to "paths" in line 92 in the fileops.py file of this directory in your Anaconda installation: 
+Anaconda3\envs\arcgis\Lib\site-packages\arcgis-1.3.0-py3.5.egg\arcgis\features\_data\geodataset\io
 
 ## Configuration Files
 
@@ -25,10 +27,28 @@ The user can put his data in two configuration files. The first one is about the
 
 | Parameter | Explanation | Example |
 | --- | --- | ---|
-| "categories" | Target categories for data that should be exported | "categories" : {"public_transport" : ["station"],"amenity" : ["place_of_worship", "bar"]} |
-| "attributes" | Attributes to be stored. Field name from OSM and field name for Feature Layer. No space allowed! Latitude, longitude and id are always included. | "attributes" : {"Name" : "name", "Rollstuhlgerecht":"wheelchair", "Rollstuhlgerechte_Toilette":"toilets:wheelchair"} |
-| "boundingBox" | Bounding box for the data to be loaded | "boundingBox" : {"minLatInit" : 48.0937890648, "minLonInit" : 11.4947891235, "maxLatInit" : 48.172382181, "maxLonInit" : 11.6242218018} |
-| "geometryChosen" | Geometry of data to be loaded. 0:nodes, 1:ways, 2:both | "geometryChosen" : 0 |
+| "categories" | Target categories for data that should be exported | "categories" : {
+		"public_transport" : ["station", "platform"],
+		"leisure" : ["sports_centre", "sauna"]
+	} |
+| "attributes" | Attributes to be stored. Field name from OSM and field name for Feature Layer. No space allowed! OSM ID is always included. The attributes are set for each category individual. So there is one JSON element for every category. The key for the element is "attributes_" + category | "attributes_public_transport" : {
+		"name" : "name", 
+		"wheelchair":"wheelchair", 
+		"toilets":"toilets:wheelchair"
+	},
+	
+	"attributes_leisure" : {
+		"name" : "name", 
+		"network" : "network",
+		"operator" : "operator"
+	}| "boundingBox" | Bounding box for the data to be loaded | "boundingBox" : {"minLatInit" : 48.0937890648, "minLonInit" : 11.4947891235, "maxLatInit" : 48.172382181, "maxLonInit" : 11.6242218018} |
+| 
+"geometries" | You can decide for every category which geometry types you want to load. If "lineAndPolygon" is chosen every closed way is returned as polygon. | "geometries" : {
+		"point" : ["public_transport", "leisure"],
+		"line" :[],
+		"polygon": ["leisure"],
+		"lineAndPolygon" : ["public_transport"]
+	} |
 
 ### ArcGIS Online Configuration
 
@@ -44,10 +64,6 @@ The second file is used do configure the [ArcGIS Online access](agolconfig.json)
 | "description" | Description for the service | "description" : "description." |
 | "copyrightText" | Copyright text for the service | "copyrightText" : "Copyright" |
 | "maxRecordCount" | Max Record Count for the service | "maxRecordCount" : 5000 |
-| "updateService" | If the value is "0" a new service with the data is published. If the value is "1" an existing service is overwritten and a service id is required | "updateService" : 1 |
-| "featureServiceID" | Feature Service ID to update a service. | "featureServiceID" : "4cfcbee9f1de4ed9a167e0c7b8d11825" |
-| "overwriteFeatureService" | This tag is for the users safety. Because it hast o be  "1" that the Feature Service is realy overwritten with the new data. If the Feature Service should be updated and the value is not "1" there will not be an update. | "overwriteFeatureService" : 1 |
-
 
 
 ## Input Validation
@@ -56,7 +72,8 @@ all modules can be imported.
 
 ## Get OSM Data
 The module to get the data from Open Street Map takes a dictionary as input. This dictionary is built with the [ReadOSMConfig.py module](ReadOSMConfig.py) and contains the information
-of the config file. The return value is a data frame that has the format that can be used to transform it into Esri conform data.
+of the config file. The return value is a data frame that has the format that can be used to transform it into Esri conform data. As the Overpass API has limitations for [data download](https://wiki.openstreetmap.org/wiki/Overpass_API#Limitations) there can occur problems after finishing a download.
+There is no fix limit mentioned.
 
 ## Publish Data do ArcGIS Online
 The module takes the dictionary from the [ReadAGOLConfig.py module](ReadAGOLConfig.py) and the data frame with the Open Street Map data. The data is published as a Feature Collection

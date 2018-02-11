@@ -1,13 +1,10 @@
 {
 	"portalInit" : "https://www.arcgis.com/",
 	"userInit" : "user",
-	"passwordInit" : "passwordInit",
+	"passwordInit" : "password",
 	"title" : "title_test",
 	"tags" : ["tag1, tag2, tag3"],
 	"description" : "description",
-	"copyrightText" : "",
-	"maxRecordCount" : 1000,
-	"updateService" : 0,
-	"featureServiceID" : "",
-	"silentUpdate" : 0
+	"copyrightText" : "OSM",
+	"maxRecordCount" : 110000
 }

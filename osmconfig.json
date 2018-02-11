@@ -1,12 +1,19 @@
 {
 	"categories" : {
-		"public_transport" : ["station"]
+		"public_transport" : ["station", "platform"],
+		"leisure" : ["sports_centre", "sauna"]
 	},
 	
-	"attributes" : {
-		"Name" : "name", 
-		"Rollstuhlgerecht":"wheelchair", 
-		"Rollstuhlgerechte_Toilette":"toilets:wheelchair"
+	"attributes_public_transport" : {
+		"name" : "name", 
+		"wheelchair":"wheelchair", 
+		"toilets":"toilets:wheelchair"
+	},
+	
+	"attributes_leisure" : {
+		"name" : "name", 
+		"network" : "network",
+		"operator" : "operator"
 	},
 	
 	"boundingBox" : {
@@ -16,5 +23,10 @@
 		"maxLonInit" : "11.671867758"
 	},
 	
-	"geometryChosen" : 0
+	"geometries" : {
+		"point" : ["public_transport", "leisure"],
+		"line" :[],
+		"polygon": ["leisure"],
+		"lineAndPolygon" : ["public_transport"]
+	}
 }
