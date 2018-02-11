@@ -27,28 +27,10 @@ The user can put his data in two configuration files. The first one is about the
 
 | Parameter | Explanation | Example |
 | --- | --- | ---|
-| "categories" | Target categories for data that should be exported | "categories" : {
-		"public_transport" : ["station", "platform"],
-		"leisure" : ["sports_centre", "sauna"]
-	} |
-| "attributes" | Attributes to be stored. Field name from OSM and field name for Feature Layer. No space allowed! OSM ID is always included. The attributes are set for each category individual. So there is one JSON element for every category. The key for the element is "attributes_" + category | "attributes_public_transport" : {
-		"name" : "name", 
-		"wheelchair":"wheelchair", 
-		"toilets":"toilets:wheelchair"
-	},
-	
-	"attributes_leisure" : {
-		"name" : "name", 
-		"network" : "network",
-		"operator" : "operator"
-	}| "boundingBox" | Bounding box for the data to be loaded | "boundingBox" : {"minLatInit" : 48.0937890648, "minLonInit" : 11.4947891235, "maxLatInit" : 48.172382181, "maxLonInit" : 11.6242218018} |
-| 
-"geometries" | You can decide for every category which geometry types you want to load. If "lineAndPolygon" is chosen every closed way is returned as polygon. | "geometries" : {
-		"point" : ["public_transport", "leisure"],
-		"line" :[],
-		"polygon": ["leisure"],
-		"lineAndPolygon" : ["public_transport"]
-	} |
+| "categories" | Target categories for data that should be exported | "categories" : {"public_transport" : ["station", "platform"],"leisure" : ["sports_centre", "sauna"]} |
+| "attributes" | Attributes to be stored. Field name from OSM and field name for Feature Layer. No space allowed! OSM ID is always included. The attributes are set for each category individual. So there is one JSON element for every category. The key for the element is "attributes_" + category | "attributes_public_transport" : {"name" : "name", "wheelchair":"wheelchair", "toilets":"toilets:wheelchair"},"attributes_leisure" : {"name" : "name", "network" : "network","operator" : "operator"} |
+| "boundingBox" | Bounding box for the data to be loaded | "boundingBox" : {"minLatInit" : 48.0937890648, "minLonInit" : 11.4947891235, "maxLatInit" : 48.172382181, "maxLonInit" : 11.6242218018} |
+| "geometries" | You can decide for every category which geometry types you want to load. If "lineAndPolygon" is chosen every closed way is returned as polygon. | "geometries" : {"point" : ["public_transport", "leisure"],"line" :[],"polygon": ["leisure"],"lineAndPolygon" : ["public_transport"]} |
 
 ### ArcGIS Online Configuration
 
