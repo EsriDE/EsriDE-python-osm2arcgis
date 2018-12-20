@@ -26,7 +26,7 @@ set path=C:\your_anaconda_install_path\Anaconda3\Library\bin\;%PATH%
 call conda activate OSM2ArcGIS
 call "C:\Users\your_username\AppData\Local\conda\conda\envs\your_python_environment"\python.exe "C:\your_project_extraction_path"\MainModule.py
 ```
-4.	Adapt the content of the ArcGIS Online / Portal for ArcGIS configuration file agolconfig.json to match your portal URL, your username and password.
+4.	Adapt the content of the ArcGIS Online / Portal for ArcGIS configuration file [agolconfig.json](agolconfig.json) to match your portal URL, your username and password.
 5.	Optionally adapt the content of the OpenStreetMap configuration file [osmconfig.json](osmconfig.json) to the desired region, add configurations or remove the sample configuration.
 6.	Execute the file [runScript.bat](runScript.bat) from your file-browser
 7.	Go to your ArcGIS Online portal and look at the results
