@@ -13,7 +13,7 @@ Download and install the 3.x Version of [Anaconda](https://www.anaconda.com/down
 * [pandas >= 0.20.2](http://pandas.pydata.org/): Can be found in the package list in Anaconda and installed directly. 
 * [click >= 6.7](https://github.com/pallets/click): Can be found in the package list in Anaconda and installed directly.
 The other packages are installed by using the terminal and entering a line of code.
-* [ArcGIS API for Python <= 1.5.0](https://developers.arcgis.com/python/): `conda install -c esri arcgis`
+* [ArcGIS API for Python <= 1.5.0](https://developers.arcgis.com/python/): `conda install -c esri arcgis=1.5.0`
 * [requests >= 2.18.4](http://docs.python-requests.org/en/master/) `pip install requests`
 * [progressbar >= 2.5](https://pypi.org/project/progressbar/) `pip install progressbar`
 
