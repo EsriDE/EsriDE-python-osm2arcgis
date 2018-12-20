@@ -51,12 +51,12 @@ The input of the configuration files is read in and validated with two python sc
 all modules can be imported. 
 
 ## Get OSM Data
-The module to get the data from Open Street Map takes a dictionary as input. This dictionary is built with the [ReadOSMConfig.py module](ReadOSMConfig.py) and contains the information
+The module to get the data from Open Street Map takes a dictionary as input. This dictionary is built with the [OSMConfigHelper.py module](OSMConfigHelper.py) and contains the information
 of the config file. The return value is a data frame that has the format that can be used to transform it into Esri conform data. As the Overpass API has limitations for [data download](https://wiki.openstreetmap.org/wiki/Overpass_API#Limitations) there can occur problems after finishing a download.
 There is no fix limit mentioned. The boundingBox should not be larger as a city or town an its suburbs. A good approach is the selection of an extent, which matches the area of a city or town. This can be accomplished by searching for the name of the city or town on [OSM](https://www.openstreetmap.org/export#map=12/48.1551/11.5418) and click on the "Export" button.
 
 ## Publish Data do ArcGIS Online
-The module takes the dictionary from the [ReadAGOLConfig.py module](ReadAGOLConfig.py) and the data frame with the Open Street Map data. The data is published as a Feature Collection
+The module takes the dictionary from the [AGOLConfigHelper.py module](AGOLConfigHelper.py) and the data frame with the Open Street Map data. The data is published as a Feature Collection
 to the ArcGIS Online account that is defined in the configuration file.
 
 ## Issues 
