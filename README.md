@@ -55,9 +55,10 @@ The module to get the data from Open Street Map takes a dictionary as input. Thi
 of the config file. The return value is a data frame that has the format that can be used to transform it into Esri conform data. As the Overpass API has limitations for [data download](https://wiki.openstreetmap.org/wiki/Overpass_API#Limitations) there can occur problems after finishing a download.
 There is no fix limit mentioned. The boundingBox should not be larger as a city or town an its suburbs. A good approach is the selection of an extent, which matches the area of a city or town. This can be accomplished by searching for the name of the city or town on [OSM](https://www.openstreetmap.org/export#map=12/48.1551/11.5418) and click on the "Export" button.
 
-## Publish Data do ArcGIS Online
-The module takes the dictionary from the [AGOLConfigHelper.py module](AGOLConfigHelper.py) and the data frame with the Open Street Map data. The data is published as a Feature Collection
-to the ArcGIS Online account that is defined in the configuration file.
+## Publish Data to ArcGIS Online
+The module takes the dictionary from the [AGOLConfigHelper.py module](AGOLConfigHelper.py) and the data frame with the Open Street Map data. The data is published in up to three layers for the three geometry types line, point and polygon in one feature service in ArcGIS Online.
+The ArcGIS Online account defined in the configuration file will be used to upload the data to your ArcGIS Online portal.
+When the script has finished to upload the data successfully, a new layer is visible in the "Content" pane in your ArcGIS Online portal.
 
 ## Issues 
 Find a bug or want to request a new feature? Please let us know by submitting an issue.
