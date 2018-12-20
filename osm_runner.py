@@ -1,4 +1,17 @@
 __version__ = "0.0.2"
+'''
+__author__ = "Jeffrey Scarmazzi, Lukas Bug"
+__copyright__ = "Copyright 2018, Jeffrey Scarmazzi, Esri Deutschland GmbH"
+__license__ = "Apache-2.0"
+__version__ = "0.0.2"
+__email__ = "s.geigenberger@esri.de, lukas.bug@aol.de"
+
+The module "osm_runner" was written by Jeffrey Scarmazzi (Jwmazzi) and all copyright belongs to him.
+The original module can be found using the following URL: https://github.com/Jwmazzi/osm_runner
+It was extended to output complex multipolygons based on relation items in OSM.
+Copyright for parts of this version of osm_runner belongs to Jeffrey Scarmazzi.
+'''
+
 from osm_runner_utils import Format, Output, Filters, Elements
 from arcgis.geometry import Point, Polyline, Polygon
 from arcgis.features import SpatialDataFrame
