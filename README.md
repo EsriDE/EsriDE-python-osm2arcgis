@@ -29,7 +29,7 @@ call "C:\Users\your_username\AppData\Local\conda\conda\envs\your_python_environm
 5.	Optionally adapt the content of the OpenStreetMap configuration file osmconfig.json to the desired region, add configurations or remove the sample configuration.
 6.	Execute the file runScript.bat from your file-browser
 7.	Go to your ArcGIS Online portal and look at the results
-8.	Click on your most recently created feature service and use the pane “Visualization” to show the results. If you did not modify osmconfig.json, the result should be an output like this:
+8.	Click on your most recently created feature service and use the pane “Visualization” to show the results. If you did not modify osmconfig.json, the result should be an output like this: ![Screenshot](/OSM2ArcGIS.png?raw=true)
 
 ## Configuration Files
 
