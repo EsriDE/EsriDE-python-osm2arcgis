@@ -9,6 +9,7 @@ __email__ = "s.geigenberger@esri.de, lukas.bug@aol.de"
 The module "osm_runner" was written by Jeffrey Scarmazzi (Jwmazzi) and all copyright belongs to him.
 The original module can be found using the following URL: https://github.com/Jwmazzi/osm_runner
 It was extended to output complex multipolygons based on relation items in OSM.
+This is the main module of osm_runner, parts of the configuration for this module can be found in osm_runner_utils.py.
 Copyright for parts of this version of osm_runner belongs to Jeffrey Scarmazzi.
 '''
 
