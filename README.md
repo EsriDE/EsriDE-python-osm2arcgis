@@ -17,6 +17,20 @@ The other packages are installed by using the terminal and entering a line of co
 * [requests >= 2.18.4](http://docs.python-requests.org/en/master/) `pip install requests`
 * [progressbar >= 2.5](https://pypi.org/project/progressbar/) `pip install progressbar`
 
+## First steps
+1.	Setup your python environment as described in the section “Requirements”
+2.	Extract the files from the downloaded OSM2ArcGIS zip archive to a location of your choice.
+3.	Adapt the content of the file runScript.bat to match the paths of your Anaconda installation, the python-environment and the location of the OSM2ArcGIS folder, where the project files have been extracted to in step 2. E.g.:
+```set path=C:\your_anaconda_install_path\Anaconda3\Library\bin\;%PATH%
+call conda activate OSM2ArcGIS
+call "C:\Users\your_username\AppData\Local\conda\conda\envs\your_python_environment"\python.exe "C:\your_project_extraction_path"\MainModule.py
+```
+4.	Adapt the content of the ArcGIS Online / Portal for ArcGIS configuration file agolconfig.json to match your portal URL, your username and password.
+5.	Optionally adapt the content of the OpenStreetMap configuration file osmconfig.json to the desired region, add configurations or remove the sample configuration.
+6.	Execute the file runScript.bat from your file-browser
+7.	Go to your ArcGIS Online portal and look at the results
+8.	Click on your most recently created feature service and use the pane “Visualization” to show the results. If you did not modify osmconfig.json, the result should be an output like this:
+
 ## Configuration Files
 
 ### OSM Configuration
