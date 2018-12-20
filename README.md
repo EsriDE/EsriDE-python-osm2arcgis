@@ -21,7 +21,8 @@ The other packages are installed by using the terminal and entering a line of co
 1.	Setup your python environment as described in the section “Requirements”
 2.	Extract the files from the downloaded OSM2ArcGIS zip archive to a location of your choice.
 3.	Adapt the content of the file runScript.bat to match the paths of your Anaconda installation, the python-environment and the location of the OSM2ArcGIS folder, where the project files have been extracted to in step 2. E.g.:
-```set path=C:\your_anaconda_install_path\Anaconda3\Library\bin\;%PATH%
+```
+set path=C:\your_anaconda_install_path\Anaconda3\Library\bin\;%PATH%
 call conda activate OSM2ArcGIS
 call "C:\Users\your_username\AppData\Local\conda\conda\envs\your_python_environment"\python.exe "C:\your_project_extraction_path"\MainModule.py
 ```
