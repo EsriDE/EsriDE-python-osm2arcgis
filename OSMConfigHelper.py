@@ -1,38 +1,30 @@
+__version__ = "1.4"
 '''
-__author__ = "Simon Geigenberger"
+__author__ = "Simon Geigenberger, Lukas Bug"
 __copyright__ = "Copyright 2018, Esri Deutschland GmbH"
 __license__ = "Apache-2.0"
-__version__ = "1.3"
-__email__ = "s.geigenberger@esri.de"
+__version__ = "1.4"
+__email__ = "s.geigenberger@esri.de, lukas.bug@aol.de"
 '''
 
 import json
 import sys
 import requests
+from arcgis.geometry import Polygon
+import arcgis.geometry
 
-def readOSMConfig():
+
+def getbBoxArea(bBox):
+    bBox["y0"] = bBox["minLonInit"]
+    bBox["y1"] = bBox["maxLonInit"]
+    bBox["x0"] = bBox["minLatInit"]
+    bBox["x1"] = bBox["maxLatInit"]
+    geom = Polygon({"rings":[[(bBox["x0"],bBox["y1"]),(bBox["x0"],bBox["y0"]),(bBox["x1"],bBox["y0"]),(bBox["x1"],bBox["y1"]),(bBox["x0"],bBox["y1"])]],"spatialReference": {"wkid": 4326}})
+    return abs(geom.area)
+
+
+def readConfig(agolConfig):
     dictOSMConfig = {}
-    
-    # Try to import the overpass module
-    try:
-        import overpass
-    except:
-        print("Cannot import Overpass API.")
-        sys.exit()
-    
-    # Try to import the module for the OSM API
-    try:
-        from osmapi import OsmApi
-    except:
-        print("Cannot import OSM API.")
-        sys.exit()
-    
-    # Try to import the pandas module
-    try:
-        import pandas as pd
-    except:
-        print("Cannot import Pandas module.")
-        sys.exit()
         
     # Try to load the OSM keys
     try:
@@ -70,45 +62,47 @@ def readOSMConfig():
     try:
         data = json.loads(json_data)
     except:
-        print("JSON file cannot be red.")
+        print("JSON file cannot be read.")
         sys.exit()
         
     # Validates if categories are selected and all selected categories exist as tags.
     try:
-        categories = data["categories"]
-        for key in categories:
-            for val in categories[key]:
+        enabledcatlist = []
+        i=0
+        for cat in data["categories"]:
+            if cat['isEnabled'] == 'yes':
+                enabledcatlist.append(i)
+            i+=1
+            for val in cat["categoryValues"]:
                 categorieExists = False
-                categorieStr = key + ":" + val
-                for tag in tagList:
-                    if categorieStr == tag:
-                        categorieExists = True
-                        break
+                categorieStr = cat["categoryName"] + ":" + val
+                if categorieStr in tagList:
+                    categorieExists = True
+                    break
                 if not categorieExists:
                     print(categorieStr + " does not exist.")
                     sys.exit()
-        dictOSMConfig["categories"] = categories
-    except:
+        dictOSMConfig["categories"] = data["categories"]
+        dictOSMConfig["enabledCategories"] = enabledcatlist
+    except Exception as e:
+        print(e)
         print("No categories chosen.")
         sys.exit()
     
     # Validates if attributes are selected and all selected attributes exist as keys
     try:
-        categories = data["categories"]
-        for key in categories:
-            attributesKey = "attributes_" + key
-            attributes = data[attributesKey]
+        for cat in data["categories"]:
+            attributes = cat["attributeFieldsToExclude"]
             for key in attributes:
                 attributeExists = False
-                for keyL in keyList:
-                    if attributes[key] == keyL:
-                        attributeExists = True
-                        break
+                if key in keyList:
+                    attributeExists = True
+                    break
                 if not attributeExists:
-                    print(attributes[key] + " does not exist.")
+                    print(key + " does not exist.")
                     sys.exit()
-            dictOSMConfig[attributesKey] = attributes
-    except:
+    except Exception as e:
+        print(e)
         print("No attributes chosen.")    
         sys.exit()
     
@@ -155,6 +149,7 @@ def readOSMConfig():
                     if maxLon < 180 and maxLon > -180:
                         if minLon < 180 and minLon > -180:
                             print("All Coordinates in range.")
+                            dictOSMConfig["boundingBox"] = '('+str(dictOSMConfig["minLat"])+','+str(dictOSMConfig["minLon"])+','+str(dictOSMConfig["maxLat"])+','+str(dictOSMConfig["maxLon"])+')'
                         else:
                             print("Minimum longitude is out of range.")
                     else:
@@ -166,12 +161,24 @@ def readOSMConfig():
         else:
             print("Maximum longitude is not greater than minimum longitude.")
     else:
-        print("Maximum latitude is not greater than minimum latitude.")       
+        print("Maximum latitude is not greater than minimum latitude.")    
+
+
+    # Validates if the bounding box extent is not to large for OSM server
+    try:
+        bBox = {k:float(v) for (k,v) in data["boundingBox"].items()}
+        area = getbBoxArea(bBox)
+        if area > 1.7:
+            raise Exception("Bounding box area to large for OSM server, please select a smaller extent.")
+    except Exception as e:
+        print(str(e))
+        sys.exit()   
     
     # Validates if a value for geometryChosen is selected and the value is in the correct range.
     try:
-        geometries = data["geometries"]
-        dictOSMConfig["geometries"] = geometries
+        for key in data["categories"]:
+            geometries = key["geometryType"]
+            dictOSMConfig["geometries"] = geometries
     except:
         print("No geometries chosen.")
         sys.exit()

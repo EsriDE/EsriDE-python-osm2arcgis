@@ -1,7 +1,7 @@
 # EsriDE-python-osm2arcgis
 
 This Project contains different Python modules to convert node and way datasets from Open Street Map into formats that can be used within Esri technologies.
-The current version publishes the data as point Feature Collection on ArcGIS Online. The modules can be extended with filters, schedulers or the possibility
+The current version publishes the geometry types point, polygon and polyline in seperate layers inside one feature service on ArcGIS Online. The modules can be extended with additional filters, schedulers or the possibility
 to save the datasets as Geodatabase.
 
 ## Requirements
@@ -10,27 +10,25 @@ Following Python version and packages have to be installed. It is described how 
 
 Download and install the 3.x Version of [Anaconda](https://www.anaconda.com/download/). Then open the Anaconda Navigator and create a new Python Environment. The Python version must be 3.5 or later. Then install these packages in the environment:
 
-* [pandas 0.20.2](http://pandas.pydata.org/): Can be found in the package list in Anaconda and installed directly.
-* [click](https://github.com/pallets/click): Can be found in the package list in Anaconda and installed directly.
+* [pandas >= 0.20.2](http://pandas.pydata.org/): Can be found in the package list in Anaconda and installed directly. 
+* [click >= 6.7](https://github.com/pallets/click): Can be found in the package list in Anaconda and installed directly.
 The other packages are installed by using the terminal and entering a line of code.
-* [ArcGIS API for Python](https://developers.arcgis.com/python/): `conda install -c esri arcgis`
-* [Overpass API Python Wrapper](https://github.com/mvexel/overpass-api-python-wrapper): `pip install overpass`
-* [OSM API](https://pypi.python.org/pypi/osmapi): `pip install osmapi`
-*[pyshp](https://pypi.python.org/pypi/pyshp): `conda install pyshp` and you have to change "path" to "paths" in line 92 in the fileops.py file of this directory in your Anaconda installation: 
-Anaconda3\envs\arcgis\Lib\site-packages\arcgis-1.3.0-py3.5.egg\arcgis\features\_data\geodataset\io
+* [ArcGIS API for Python <= 1.5.0](https://developers.arcgis.com/python/): `conda install -c esri arcgis`
+* [requests >= 2.18.4](http://docs.python-requests.org/en/master/) `pip install requests`
+* [progressbar >= 2.5](https://pypi.org/project/progressbar/) `pip install progressbar`
 
 ## Configuration Files
 
 ### OSM Configuration
 
-The user can put his data in two configuration files. The first one is about the [Open Streetmap Data](osmconfig.json). Categories and attributes must have the same syntax as in OSM.
+The user can put his data in two configuration files. The first one is about the [Open Streetmap Data](osmconfig.json). Valid OSM keys and tags can be found on the following two OSM websites: 
+* For keys: https://taginfo.openstreetmap.org/api/4/projects/keys
+* For tags: https://taginfo.openstreetmap.org/api/4/projects/tags
 
-| Parameter | Explanation | Example |
-| --- | --- | ---|
-| "categories" | Target categories for data that should be exported | "categories" : {"public_transport" : ["station", "platform"],"leisure" : ["sports_centre", "sauna"]} |
-| "attributes" | Attributes to be stored. Field name from OSM and field name for Feature Layer. No space allowed! OSM ID is always included. The attributes are set for each category individual. So there is one JSON element for every category. The key for the element is "attributes_" + category | "attributes_public_transport" : {"name" : "name", "wheelchair":"wheelchair", "toilets":"toilets:wheelchair"},"attributes_leisure" : {"name" : "name", "network" : "network","operator" : "operator"} |
-| "boundingBox" | Bounding box for the data to be loaded | "boundingBox" : {"minLatInit" : 48.0937890648, "minLonInit" : 11.4947891235, "maxLatInit" : 48.172382181, "maxLonInit" : 11.6242218018} |
-| "geometries" | You can decide for every category which geometry types you want to load. If "lineAndPolygon" is chosen every closed way is returned as polygon. | "geometries" : {"point" : ["public_transport", "leisure"],"line" :[],"polygon": ["leisure"],"lineAndPolygon" : ["public_transport"]} |
+| Parameter | Usage | <img width=2000/> Example |
+| --- | --- | --- |
+| "categories" | Controls the export of elements from OpenStreetMap, for every new configuration with another geometry or OSM key a new category has to be created within the following 5 properties: <br><br> - The desired OSM key for "categoryName" property. Multiple values not allowed here. <br><br> - The desired OSM tags for "categoryValue" property. Multiple values in square brackets. <br><br> - The excluded fields from service on ArcGIS Online for the "attributeFieldsToExclude" property. Multiple values in square brackets. <br><br> - The geometry type, valid types are "line", "point" or "polygon". Multiple values not allowed here. <br><br> - Set the "isEnabled" property to "yes" to activate or to "no" to deactivate a configuration. Currently unneeded configurations retainable in configuration file. | "categories" : <br> [ <br> &nbsp;&nbsp;&nbsp;&nbsp; { <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "categoryName" : "public_transport", <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "categoryValues" :["station", "platform"], <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "attributeFieldsToExclude" : ["bus", "tram"], <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "geometryType" : "polygon", <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "isEnabled" : "yes" <br> &nbsp;&nbsp;&nbsp;&nbsp; }, <br> &nbsp;&nbsp;&nbsp;&nbsp; { <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "categoryName" : "public_transport", <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "categoryValues" : ["station", "platform"], <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "attributeFieldsToExclude" : ["bus", "tram"], <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "geometryType" : "point", <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "isEnabled" : "yes" <br> &nbsp;&nbsp;&nbsp;&nbsp; }, <br> &nbsp;&nbsp;&nbsp;&nbsp; { <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "categoryName" : "public_transport", <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "categoryValues" : ["platform", "network"], <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "attributeFieldsToExclude" : ["bus", "tram"], <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "geometryType" : "line", <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "isEnabled" : "yes" <br> &nbsp;&nbsp;&nbsp;&nbsp; } <br> ] 
+| "boundingBox" | Bounding box for the data to be loaded. Multiple bounding boxes not allowed here. | "boundingBox" : <br> { <br> &nbsp;&nbsp;&nbsp;&nbsp; "minLatInit" : "48.0503", <br> &nbsp;&nbsp;&nbsp;&nbsp; "minLonInit" : "11.2723", <br> &nbsp;&nbsp;&nbsp;&nbsp; "maxLatInit" : "48.2597", <br> &nbsp;&nbsp;&nbsp;&nbsp; "maxLonInit" : "11.8113" <br> } |
 
 ### ArcGIS Online Configuration
 
@@ -49,13 +47,13 @@ The second file is used do configure the [ArcGIS Online access](agolconfig.json)
 
 
 ## Input Validation
-The input of the configuration files is red in and validated with two python scripts. It is checked if all necessary information is included and correct, the structure is correct and
+The input of the configuration files is read in and validated with two python scripts. It is checked if all necessary information is included and correct, the structure is correct and
 all modules can be imported. 
 
 ## Get OSM Data
 The module to get the data from Open Street Map takes a dictionary as input. This dictionary is built with the [ReadOSMConfig.py module](ReadOSMConfig.py) and contains the information
 of the config file. The return value is a data frame that has the format that can be used to transform it into Esri conform data. As the Overpass API has limitations for [data download](https://wiki.openstreetmap.org/wiki/Overpass_API#Limitations) there can occur problems after finishing a download.
-There is no fix limit mentioned.
+There is no fix limit mentioned. The boundingBox should not be larger as a city or town an its suburbs. A good approach is the selection of an extent, which matches the area of a city or town. This can be accomplished by searching for the name of the city or town on [OSM](https://www.openstreetmap.org/export#map=12/48.1551/11.5418) and click on the "Export" button.
 
 ## Publish Data do ArcGIS Online
 The module takes the dictionary from the [ReadAGOLConfig.py module](ReadAGOLConfig.py) and the data frame with the Open Street Map data. The data is published as a Feature Collection

@@ -1,32 +1,34 @@
 {
-	"categories" : {
-		"public_transport" : ["station", "platform"],
-		"leisure" : ["sports_centre", "sauna"]
+	"boundingBox" : 
+	{
+		"minLatInit" : "48.0558",
+		"minLonInit" : "11.2723",
+		"maxLatInit" : "48.2539",
+		"maxLonInit" : "11.8113"
 	},
-	
-	"attributes_public_transport" : {
-		"name" : "name", 
-		"wheelchair":"wheelchair", 
-		"toilets":"toilets:wheelchair"
-	},
-	
-	"attributes_leisure" : {
-		"name" : "name", 
-		"network" : "network",
-		"operator" : "operator"
-	},
-	
-	"boundingBox" : {
-		"minLatInit" : "48.0772695254",
-		"minLonInit" : "11.4776988924",
-		"maxLatInit" : "48.1868111442",
-		"maxLonInit" : "11.671867758"
-	},
-	
-	"geometries" : {
-		"point" : ["public_transport", "leisure"],
-		"line" :[],
-		"polygon": ["leisure"],
-		"lineAndPolygon" : ["public_transport"]
-	}
+
+	"categories" : 
+	[
+		{
+	    	"categoryName" : "public_transport",
+			"categoryValues" : ["station", "platform"],
+			"attributeFieldsToExclude" : ["bus", "tram"],
+			"geometryType" : "polygon",
+			"isEnabled" : "yes"
+		},
+		{
+			"categoryName" : "public_transport",
+			"categoryValues" : ["station", "platform"],
+			"attributeFieldsToExclude" : ["bus", "tram"],
+			"geometryType" : "point",
+			"isEnabled" : "no"
+		},
+		{
+			"categoryName" : "public_transport",
+			"categoryValues" : ["platform", "network"],
+			"attributeFieldsToExclude" : ["bus", "tram"],
+			"geometryType" : "line",
+			"isEnabled" : "yes"
+		}
+	]
 }

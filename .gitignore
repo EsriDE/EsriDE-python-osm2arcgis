@@ -2,6 +2,7 @@
 __pycache__/
 *.py[cod]
 *$py.class
+*.code-workspace
 
 # C extensions
 *.so
@@ -69,6 +70,9 @@ target/
 
 # Jupyter Notebook
 .ipynb_checkpoints
+
+# Visual Studio
+.vscode/
 
 # pyenv
 .python-version
