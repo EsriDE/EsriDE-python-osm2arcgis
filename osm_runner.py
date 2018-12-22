@@ -4,7 +4,7 @@ __author__ = "Jeffrey Scarmazzi, Lukas Bug"
 __copyright__ = "Copyright 2018, Jeffrey Scarmazzi, Esri Deutschland GmbH"
 __license__ = "Apache-2.0"
 __version__ = "0.0.2"
-__email__ = "s.geigenberger@esri.de, lukas.bug@aol.de"
+__email__ = "lukas.bug@aol.de"
 
 The module "osm_runner" was written by Jeffrey Scarmazzi (Jwmazzi) and all copyright belongs to him.
 The original module can be found using the following URL: https://github.com/Jwmazzi/osm_runner
