@@ -6,6 +6,7 @@ to save the datasets as Geodatabase.
 
 ## Requirements
 
+### Python
 Following Python version and packages have to be installed. It is described how to set up the Python Environment in Anaconda:
 
 Download and install the 3.x Version of [Anaconda](https://www.anaconda.com/download/). Then open the Anaconda Navigator and create a new Python Environment. The Python version must be 3.5 or later. Then install these packages in the environment:
@@ -16,6 +17,9 @@ The other packages are installed by using the terminal and entering a line of co
 * [ArcGIS API for Python <= 1.5.0](https://developers.arcgis.com/python/): `conda install -c esri arcgis=1.5.0`
 * [requests >= 2.18.4](http://docs.python-requests.org/en/master/) `pip install requests`
 * [progressbar >= 2.5](https://pypi.org/project/progressbar/) `pip install progressbar`
+
+### Additional Requirement
+An ArcGIS Enterprise / Online Account with user type “Creator” (former user type “Level 2”) and at least a “Publisher” role. (An ArcGIS Online Developer Account also meets these requirements)
 
 ## First steps
 1.	Setup your python environment as described in the section “Requirements”
