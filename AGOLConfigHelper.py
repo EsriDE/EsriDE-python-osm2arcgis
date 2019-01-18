@@ -4,7 +4,7 @@ __author__ = "Simon Geigenberger, Lukas Bug"
 __copyright__ = "Copyright 2018, Esri Deutschland GmbH"
 __license__ = "Apache-2.0"
 __version__ = "1.4"
-__email__ = "s.geigenberger@esri.de, l.bug@esri.de"
+__email__ = "simon@geigenberger.info, lukas.bug@aol.de"
 '''
 
 import json
