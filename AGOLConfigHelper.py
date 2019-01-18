@@ -20,6 +20,13 @@ def readConfig():
         print("ArcGIS API for Python cannot be imported")
         sys.exit()
     
+    #Check version of ArcGIS API for Python <= 1.5.0
+    import arcgis
+    v = int(arcgis.__version__.replace(".", ""))
+    if v > 150:
+        print("ArcGIS API for Python is newer than the version required by this module, please install ArcGIS API for Python 1.5.0 or a previous version.")
+        sys.exit()
+    
     #Try to open the config file.
     try:
         json_data = open("agolconfig.json").read()
