@@ -4,7 +4,7 @@ __author__ = "Simon Geigenberger, Lukas Bug"
 __copyright__ = "Copyright 2018, Esri Deutschland GmbH"
 __license__ = "Apache-2.0"
 __version__ = "1.4"
-__email__ = "s.geigenberger@esri.de, lukas.bug@aol.de"
+__email__ = "simon@geigenberger.info, lukas.bug@aol.de"
 
 This python module is used to load the data of a data frame an ArcGIS Online or Portal. The ArcGIS Python API is used to achieve this goal. 
 At first the connection to the ArcGIS Online or Portal is built by using the URL, user and password. The second step is to build the dictionary that is used to 
