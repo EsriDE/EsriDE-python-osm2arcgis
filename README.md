@@ -19,7 +19,7 @@ The other packages are installed by using the terminal and entering a line of co
 * [progressbar >= 2.5](https://pypi.org/project/progressbar/) `pip install progressbar`
 
 ### Additional Requirement
-An ArcGIS Enterprise / Online Account with user type “Creator” (former user type “Level 2”) and at least a “Publisher” role. (An ArcGIS Online Developer Account also meets these requirements)
+An ArcGIS Online Account with user type “Creator” (New user types) or an ArcGIS Enterprise account with user type “Level 2” (Named user, for version 10.6. and below) and at least a “Publisher” role. (An ArcGIS Online Developer Account also meets these requirements)
 
 ## First steps
 1.	Setup your python environment as described in the section “Requirements”
